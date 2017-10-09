@@ -59,7 +59,7 @@ class UsersController < ApplicationController
     end
 
     def logged_in_user
-      unless logged_in? #|| remembered?
+      unless logged_in?
         flash[:warning] = "Please login to view this page."
         redirect_to login_path
       end

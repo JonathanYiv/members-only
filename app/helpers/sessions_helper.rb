@@ -1,7 +1,5 @@
 module SessionsHelper
   def logged_in?
-     # need to add remembering functionality
-
     user = User.find_by(id: cookies[:user_id])
     if user
       remembered = user.validate_token(cookies[:remember_token])
@@ -9,6 +7,14 @@ module SessionsHelper
     end
 
     !!session[:user_id] || remembered
+  end
+
+  def current_user
+    user = User.find_by(id: cookies[:user_id])
+    if user && user.validate_token(cookies[:remember_token])
+      return user
+    end
+    return User.find_by(id: session[:user_id])
   end
 
   def log_in user

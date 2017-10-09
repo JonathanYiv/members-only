@@ -17,7 +17,7 @@ class SessionsController < ApplicationController
 
   def destroy
     @user = User.find_by(id: params[:user_id])
-    forget(@user)
+    forget(@user) if @user
 
     session.delete(:user_id)
     flash[:success] = "Logged out."

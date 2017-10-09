@@ -1,0 +1,18 @@
+<% provide(:title, @post.title) %>
+
+<h1><%= @post.title %></h1>
+
+<% if logged_in? && current_user.elite? %>
+	<p>By <%= @user.username %></p>
+<% else %>
+	<p>By Anonymous</p>
+<% end %>
+
+<p><%= @post.content %></p>
+
+
+<% if logged_in? && @correct_user %>
+	<%= link_to "Edit Post", edit_post_path %><br>
+	<%= link_to "Delete Post", post_path, method: :delete,
+										  data: { confirm: "Are you sure?" } %>
+<% end %>

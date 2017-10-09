@@ -1,0 +1,11 @@
+<%= form_for(@post, url: yield(:path)) do |f| %>
+	<%= render 'errors' %>
+
+	<%= f.label :title %>
+	<%= f.text_field :title, class: "form-control" %><br><br>
+
+	<%= f.label :content %>
+	<%= f.text_area :content, size: "30x10", class: "form-control" %><br><br>
+
+	<%= f.submit yield(:button), class: "btn btn-primary" %>
+<% end %>
