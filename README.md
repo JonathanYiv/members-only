@@ -8,7 +8,7 @@ Users who are members can write posts and see the authors of posts.
 
 This is a project from [The Odin Project](https://www.theodinproject.com/courses/ruby-on-rails/lessons/authentication).
 
-Screenshot here...
+![Gossip.io](app/assets/images/gossip.png)
 
 ## Pre-Project Thoughts
 
@@ -32,4 +32,14 @@ Posts will belong to Users. Users will have many Posts.
 
 ## Post-Project Thoughts
 
-Incomplete..
+This was a really fun project. 
+
+I can feel a lot of the concepts I have learned coming together in a way where I can build things.
+
+I learned a little bootstrap for this, considering I don't yet have strong design skills. 
+
+I believe bootstrap is a good crutch until I learn those skills, so my creations don't look completely horrible.
+
+There was a lot of experimenting, tinkering around, googling, and checking my notes to put this together.
+
+I definitely feel my Rails code could be more structured and organized, but hey, I made something that works.
