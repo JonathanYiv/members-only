@@ -13,9 +13,31 @@ class User < ApplicationRecord
 
   has_secure_password
 
+
+  def self.digest(token)
+    BCrypt::Password.create(token)
+  end
+
+  def self.new_token
+    SecureRandom.urlsafe_base64
+  end
+
+  def create_remember_digest(remember_token)
+    remember_digest = User.digest(remember_token)
+    update_attribute(:remember_digest, remember_digest)
+  end
+
+  def validate_token(token)
+    BCrypt::Password.new(remember_digest).is_password?(token)
+  end
+
+  def forget
+    update_attribute(:remember_digest, nil)
+  end
+
   private
     def downcase
       self.username.downcase!
       self.email.downcase!
-    end
+    end  
 end

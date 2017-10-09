@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   before_action :logged_in_user, except: [:new, :create]
-  before_action :correct_user, only: [:edit, :update, :destroy] # this doesn't work!
+  before_action :correct_user, only: [:edit, :update, :destroy]
+  before_action :elite_user, only: [:index]
+  before_action :correct_or_elite_user, only: :show
 
   def index
     @users = User.all
@@ -41,9 +43,14 @@ class UsersController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
-    @user.destroy
-    flash[:success] = "Account deleted."
-    redirect_to root_path
+    if @user
+      @user.destroy
+      flash[:success] = "Account deleted."
+      redirect_to root_path
+    else
+      flash[:warning] = "This user does not exist."
+      redirect_to root_path
+    end
   end
 
   private
@@ -52,15 +59,32 @@ class UsersController < ApplicationController
     end
 
     def logged_in_user
-      unless logged_in?
+      unless logged_in? #|| remembered?
         flash[:warning] = "Please login to view this page."
         redirect_to login_path
       end
     end
 
     def correct_user
-      if params[:id] != session[:user_id]
+      @user = User.find(session[:user_id])
+      unless params[:id].to_i == session[:user_id]
         flash[:danger] = "You are not authorized to do this."
+        redirect_to root_path
+      end
+    end
+
+    def elite_user
+      @user = User.find(session[:user_id])
+      unless @user.elite?
+        flash[:warning] = "You aren't one of the elite!"
+        redirect_to root_path
+      end
+    end
+
+    def correct_or_elite_user
+      @user = User.find_by(id: session[:user_id])
+      unless params[:id].to_i == session[:user_id] || @user.elite?
+        flash[:danger] = "You are not authorized to see this."
         redirect_to root_path
       end
     end
