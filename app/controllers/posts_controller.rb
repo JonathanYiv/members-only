@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
   before_action :logged_in_user, except: [:index, :show]
   before_action :correct_user, only: [:edit, :update, :destroy]
+  before_action :elite_user, only: [:new, :create]
 
   def index
     @posts = Post.all
@@ -72,5 +73,9 @@ class PostsController < ApplicationController
         flash[:danger] = "You are not authorized to do this."
         redirect_to root_path
       end
+    end
+
+    def elite_user
+      current_user.elite?
     end
 end
